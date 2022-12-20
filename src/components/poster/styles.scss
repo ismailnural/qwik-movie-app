@@ -1,0 +1,10 @@
+.poster {
+  padding-top: calc(1920 / 1280 * 100%);
+  position: relative;
+
+  img {
+    display: block;
+    position: absolute;
+    top: 0;
+  }
+}
