@@ -12,7 +12,7 @@ export const onGet = async ({
 }: {
   url: { searchParams: URLSearchParams }
 }) => {
-  const page = url.searchParams.get('page') ?? '1'
+  const page = url?.searchParams.get('page') ?? '1'
   return APIRequest.getPopularMovies({ page })
 }
 
@@ -27,7 +27,13 @@ export default component$(() => {
       onResolved={(movie) => (
         <>
           <div class='flex flex-col m-auto max-w-screen-xl justify-center my-9'>
-            <PageTitle title={`Popular Movies (${movie?.total_results})`} />
+            <PageTitle
+              title={
+                movie?.total_results > 0
+                  ? `Popular Movies (${movie?.total_results})`
+                  : 'Popular Movies '
+              }
+            />
             <div class='mt-5 grid grid-cols-2 gap-6 sm:grid-cols-4'>
               {movie?.results &&
                 movie?.results.map((item) => (

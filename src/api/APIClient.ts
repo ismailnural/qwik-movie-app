@@ -8,6 +8,7 @@ export const APIClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
     Accept: 'application/json',
+    'Accept-Encoding': 'gzip,deflate,compress'
   },
   params: {
     api_key: API_KEY
