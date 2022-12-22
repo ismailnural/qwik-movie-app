@@ -116,3 +116,21 @@ In most cases the generated `dist/_routes.json` file is ideal. However, if you n
 ```
 yarn build.server
 ```
+
+## Express Server
+
+This app has a minimal [Express server](https://expressjs.com/) implementation. After running a full build, you can preview the build using the command:
+
+```
+yarn serve
+```
+
+Then visit [http://localhost:8080/](http://localhost:8080/)
+
+## Google Cloud Run Server
+
+This app has a minimal [Cloud Run server](https://cloud.google.com/run) implementation. After running a full build, deploy your app with:
+
+```
+yarn deploy
+```
