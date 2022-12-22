@@ -7,7 +7,7 @@ import MovieCard from '../components/movie-card';
 import Pagination from '../components/pagination';
 import PageTitle from '../components/page-title';
 
-export const onGet = async ({ url }: { url: { searchParams: URLSearchParams } }) => {
+export const onRequest = async ({ url }: { url: { searchParams: URLSearchParams } }) => {
   const page = url?.searchParams.get('page') ?? '1';
   return APIRequest.getPopularMovies({ page });
 };

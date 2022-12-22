@@ -15,7 +15,7 @@ type MovieDetailResponseType = {
   movieVideos?: MovieVideosResultsType[];
 };
 
-export const onGet: RequestHandler<MovieDetailResponseType> = async ({ params }) => {
+export const onRequest: RequestHandler<MovieDetailResponseType> = async ({ params }) => {
   const movieDetails = (await APIRequest.getMovie(params.id)) ?? undefined;
   const movieVideos = (await APIRequest.getMovieVideos(params.id)) ?? undefined;
   const similarMovies = (await APIRequest.getSimilarMovies(params.id)) ?? undefined;
@@ -28,7 +28,7 @@ export const onGet: RequestHandler<MovieDetailResponseType> = async ({ params })
 };
 
 export default component$(() => {
-  const response = useEndpoint<typeof onGet>();
+  const response = useEndpoint<typeof onRequest>();
 
   return (
     <Resource
@@ -83,7 +83,7 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead<typeof onGet> = ({ data: { movieDetails } }) => {
+export const head: DocumentHead<typeof onRequest> = ({ data: { movieDetails } }) => {
   return {
     title: `${movieDetails?.title} (${getYear(movieDetails?.release_date)}) - ${movieDetails?.tagline}`,
     meta: [
