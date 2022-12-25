@@ -21,15 +21,17 @@ export default component$(() => {
 
   return (
     <>
-      <div class="flex flex-col text-gray-800 max-w-xl m-auto my-32">
-        <div class="w-full text-center mb-6">
+      <div class="w-full max-w-xl m-auto p-3 sm:p-6">
+        <div class="text-gray-800 text-center mb-6">
           <div class="font-bold text-3xl">
             qMovie
             <span class="text-red-600">.</span>
           </div>
         </div>
-        <div class="w-full bg-white rounded-lg shadow p-16 pt-12">
-          <h2 class="text-center text-2xl font-semibold tracking-tight text-gray-900 mb-12">Sign in to your account</h2>
+        <div class="w-full bg-white rounded-lg shadow p-4 sm:p-16 pt-8 sm:pt-12">
+          <h2 class="text-center text-2xl font-semibold tracking-tight text-gray-900 mb-8 sm:mb-12">
+            Sign in to your account
+          </h2>
           <div class="mb-6">
             <label for="username" class="inline-block text-md font-semibold text-gray-700 mb-2">
               Username

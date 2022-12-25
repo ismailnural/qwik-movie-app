@@ -37,12 +37,14 @@ export default component$(() => {
       <Resource
         value={movieDataResource}
         onResolved={(movie) => (
-          <div class="flex flex-col m-auto max-w-screen-xl justify-center my-9">
-            <PageTitle title={pageTitle(movie?.total_results)} />
-            <div class="mt-5 grid grid-cols-2 gap-6 sm:grid-cols-4">
-              {movie?.results && movie?.results.map((item) => <MovieCard key={item.id} item={item} />)}
+          <div class="flex items-center justify-center px-3 sm:px-5 pt-3 pb-10">
+            <div class="flex flex-col max-w-screen-xl">
+              <PageTitle title={pageTitle(movie?.total_results)} />
+              <div class="mt-5 grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-4">
+                {movie?.results && movie?.results.map((item) => <MovieCard key={item.id} item={item} />)}
+              </div>
+              <Pagination currentPage={movie?.page} totalPages={movie?.total_pages} />
             </div>
-            <Pagination currentPage={movie?.page} totalPages={movie?.total_pages} />
           </div>
         )}
       />

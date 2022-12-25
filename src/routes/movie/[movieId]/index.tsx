@@ -14,17 +14,16 @@ export const onGet = async ({ params }: { params: { movieId: string } }) => {
 
 export default component$(() => {
   const location = useLocation();
-  const movieId = location.params.movieId;
 
   const movieDetailsResource = useResource$<MovieResponseType>(async ({ track, cleanup }) => {
-    const id = track(() => movieId);
+    const id = track(() => location.params.movieId);
     const abortController = new AbortController();
     cleanup(() => abortController.abort('cleanup'));
     return await APIRequest.getMovie(id);
   });
 
   const MovieVideosResource = useResource$<MovieVideosResultsType[]>(async ({ track, cleanup }) => {
-    const id = track(() => movieId);
+    const id = track(() => location.params.movieId);
     const abortController = new AbortController();
     cleanup(() => abortController.abort('cleanup'));
     const data = await APIRequest.getMovieVideos(id);
@@ -44,7 +43,7 @@ export default component$(() => {
   });
 
   const similarMoviesResource = useResource$<MovieResponseType[]>(async ({ track, cleanup }) => {
-    const id = track(() => movieId);
+    const id = track(() => location.params.movieId);
     const abortController = new AbortController();
     cleanup(() => abortController.abort('cleanup'));
     return await APIRequest.getSimilarMovies(id);

@@ -10,9 +10,9 @@ export default component$(({ resource }: { resource: ResourceReturn<MovieRespons
       value={resource}
       onResolved={(movies) => (
         <BackdropPoster posterPath={movies?.poster_path}>
-          <div class="flex flex-col flex-1 m-auto max-w-screen-xl justify-center my-16">
-            <div class="grid grid-cols-[300px,auto] gap-8 text-white">
-              <div class="w-[300px] rounded overflow-hidden shadow-lg shadow-black">
+          <div class="flex sm:flex-col flex-1 m-auto w-full max-w-screen-xl justify-center my-8 sm:my-16 px-3 sm:px-5 xl:px-0">
+            <div class="grid grid-rows-1 sm:grid-cols-[300px,auto] gap-8 text-white">
+              <div class="w-[300px] m-auto rounded overflow-hidden shadow-lg shadow-black">
                 <Poster posterPath={movies?.poster_path} size="medium" />
               </div>
               <div class="flex flex-col">

@@ -8,10 +8,12 @@ export default component$(({ resource }: { resource: ResourceReturn<MovieRespons
     <Resource
       value={resource}
       onResolved={(movies) => (
-        <div class="flex flex-col m-auto max-w-screen-xl justify-center my-9">
-          <PageTitle title="Similar Movies" />
-          <div class="mt-5 grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {movies && movies.map((item) => <MovieCard key={item.id} item={item} />)}
+        <div class="flex items-center justify-center px-3 sm:px-5 pt-3 pb-10">
+          <div class="flex flex-col max-w-screen-xl">
+            <PageTitle title="Similar Movies" />
+            <div class="mt-5 grid grid-cols-2 gap-6 sm:grid-cols-4">
+              {movies && movies.map((item) => <MovieCard key={item.id} item={item} />)}
+            </div>
           </div>
         </div>
       )}

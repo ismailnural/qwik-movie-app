@@ -22,7 +22,7 @@ export default component$(() => {
   });
 
   return (
-    <div class="p-9 bg-white">
+    <div class="px-3 sm:px-5 py-9 bg-white">
       <div class="flex flex-col m-auto max-w-screen-xl justify-center ">
         <div class="relative items-center content-center flex ">
           <span class="text-gray-400 absolute left-4 cursor-pointer">

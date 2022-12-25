@@ -7,7 +7,7 @@ export default component$(() => {
 
   return (
     <header>
-      <div class="flex flex-1 justify-center px-5 py-3 bg-slate-900 text-white">
+      <div class="flex flex-1 justify-center px-3 sm:px-5 py-3 bg-slate-900 text-white">
         <div class="flex flex-1 items-center max-w-screen-xl justify-between">
           <div class="font-bold text-2xl">
             <Link class="logo" href="/">
