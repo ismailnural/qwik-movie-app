@@ -17,12 +17,14 @@ export default component$(
     };
   }) => {
     const nav = useNavigate();
+    const movieDetailhref = `/movie/${item.id}`;
 
     return (
       <a
+        href={movieDetailhref}
         preventdefault:click
         onClick$={() => {
-          nav.path = `/movie/${item.id}`;
+          nav.path = movieDetailhref;
         }}
         class="flex flex-col rounded-xl overflow-hidden border hover:opacity-60 transition-all"
       >

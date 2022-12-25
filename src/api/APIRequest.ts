@@ -1,8 +1,10 @@
 import { APIClient, APIUrls } from './index';
 import { MoviesResponseType, MovieResponseType, MoviesResquestType, MovieVideosResponseType } from './types';
 
-export const getPopularMovies = async (page: MoviesResquestType) => {
-  return await APIClient.get<MoviesResponseType>(APIUrls.popularMovies, { params: page });
+export const getPopularMovies = async (params: MoviesResquestType) => {
+  return await APIClient.get<MoviesResponseType>(params.query ? APIUrls.searchMovie : APIUrls.popularMovies, {
+    params,
+  });
 };
 
 export const getMovie = async (id: string) => {

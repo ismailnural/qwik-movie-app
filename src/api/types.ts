@@ -48,7 +48,8 @@ export type MovieResponseType = {
 export type MoviesResponseType = PagedResponse<MovieResponseType>;
 
 export type MoviesResquestType = {
-  page: string;
+  page?: string;
+  query?: string;
 };
 
 export type MovieVideosResultsType = {

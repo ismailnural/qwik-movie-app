@@ -1,39 +1,52 @@
-import { Resource, component$ } from '@builder.io/qwik';
+import { Resource, component$, useResource$, useContext } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { useEndpoint } from '@builder.io/qwik-city';
+import { SearchContext } from '../contexts';
 import { APIRequest } from '../api';
 import { MoviesResponseType } from '../api/types';
 import MovieCard from '../components/movie-card';
 import Pagination from '../components/pagination';
 import PageTitle from '../components/page-title';
+import SearchBar from '../components/search-bar';
 
 export const onGet = async ({ url }: { url: { searchParams: URLSearchParams } }) => {
   const page = url?.searchParams.get('page') ?? '1';
-  return await APIRequest.getPopularMovies({ page });
+
+  return { page };
 };
 
 export default component$(() => {
-  const movieData = useEndpoint<MoviesResponseType>();
+  const state = useContext(SearchContext);
 
+  const movieDataResource = useResource$<MoviesResponseType>(async ({ track, cleanup }) => {
+    const page = track(() => state.page);
+    const query = track(() => state.query);
+    const abortController = new AbortController();
+    cleanup(() => abortController.abort('cleanup'));
+    return await APIRequest.getPopularMovies({ page: `${page}`, query });
+  });
+
+  const pageTitle = (total: number) => {
+    if (state.query) {
+      return `Search for: ${state.query} ${total > 0 ? `(${total})` : ''}`;
+    }
+    return `Popular Movies ${total > 0 ? `(${total})` : ''}`;
+  };
   return (
-    <Resource
-      value={movieData}
-      onPending={() => <div>Loading...</div>}
-      onRejected={() => <div>Error</div>}
-      onResolved={(movie) => (
-        <>
+    <>
+      <SearchBar />
+      <Resource
+        value={movieDataResource}
+        onResolved={(movie) => (
           <div class="flex flex-col m-auto max-w-screen-xl justify-center my-9">
-            <PageTitle
-              title={movie?.total_results > 0 ? `Popular Movies (${movie?.total_results})` : 'Popular Movies '}
-            />
+            <PageTitle title={pageTitle(movie?.total_results)} />
             <div class="mt-5 grid grid-cols-2 gap-6 sm:grid-cols-4">
               {movie?.results && movie?.results.map((item) => <MovieCard key={item.id} item={item} />)}
             </div>
             <Pagination currentPage={movie?.page} totalPages={movie?.total_pages} />
           </div>
-        </>
-      )}
-    />
+        )}
+      />
+    </>
   );
 });
 
