@@ -1,22 +1,24 @@
-import axios, { AxiosInstance } from 'axios';
 import { BASE_URL, API_KEY } from './APIConst';
 
-// Create axios client, pre-configured with baseURL
-export const APIClient: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  responseType: 'json',
-  headers: {
-    'Content-Type': 'application/json; charset=utf-8',
-    Accept: 'application/json',
-    'Accept-Encoding': 'gzip,deflate,compress',
-  },
-  params: {
+function request<T>(url: string, config?: RequestInit & { params?: object }): Promise<T> {
+  const fetchUrl = new URL(`${BASE_URL}${url}`);
+
+  Object.entries({
     api_key: API_KEY,
-  },
-  withCredentials: true,
-  validateStatus(status) {
-    return status >= 200 && status < 300;
-  },
-});
+    ...config?.params,
+  }).forEach(([k, v]) => fetchUrl.searchParams.append(k, v));
+
+  return fetch(fetchUrl, config)
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((error) => {
+      console.log('error: ', error);
+    });
+}
+
+export const APIClient = {
+  get: <T>(url: string, params?: object) => request<T>(url, params),
+  post: <TBody extends BodyInit, T>(url: string, body: TBody) => request<T>(url, { method: 'POST', body }),
+};
 
 export default APIClient;

@@ -1,5 +1,5 @@
 import { Resource, component$ } from '@builder.io/qwik';
-import type { DocumentHead, RequestHandler } from '@builder.io/qwik-city';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import { useEndpoint } from '@builder.io/qwik-city';
 import { APIRequest } from '../../../api';
 import { MovieResponseType, MovieVideosResultsType } from '../../../api/types';
@@ -15,7 +15,7 @@ type MovieDetailResponseType = {
   movieVideos?: MovieVideosResultsType[];
 };
 
-export const onGet: RequestHandler<MovieDetailResponseType> = async ({ params }) => {
+export const onGet = async ({ params }: { params: { id: string } }) => {
   const movieDetails = (await APIRequest.getMovie(params.id)) ?? undefined;
   const movieVideos = (await APIRequest.getMovieVideos(params.id)) ?? undefined;
   const similarMovies = (await APIRequest.getSimilarMovies(params.id)) ?? undefined;
@@ -83,7 +83,7 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead<typeof onGet> = ({ data: { movieDetails } }) => {
+export const head: DocumentHead<MovieDetailResponseType> = ({ data: { movieDetails } }) => {
   return {
     title: `${movieDetails?.title} (${getYear(movieDetails?.release_date)}) - ${movieDetails?.tagline}`,
     meta: [

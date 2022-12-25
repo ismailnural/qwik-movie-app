@@ -9,7 +9,7 @@ import PageTitle from '../components/page-title';
 
 export const onGet = async ({ url }: { url: { searchParams: URLSearchParams } }) => {
   const page = url?.searchParams.get('page') ?? '1';
-  return APIRequest.getPopularMovies({ page });
+  return await APIRequest.getPopularMovies({ page });
 };
 
 export default component$(() => {
