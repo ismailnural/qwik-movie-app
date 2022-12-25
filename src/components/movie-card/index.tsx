@@ -1,4 +1,5 @@
 import { component$ } from '@builder.io/qwik';
+import { useNavigate } from '@builder.io/qwik-city';
 import { getDate } from '../../utils';
 import Poster from '../poster';
 import CircularChart from '../circular-chart';
@@ -15,9 +16,14 @@ export default component$(
       vote_average: number;
     };
   }) => {
+    const nav = useNavigate();
+
     return (
       <a
-        href={`/movie/${item.id}`}
+        preventdefault:click
+        onClick$={() => {
+          nav.path = `/movie/${item.id}`;
+        }}
         class="flex flex-col rounded-xl overflow-hidden border hover:opacity-60 transition-all"
       >
         <Poster posterPath={item.poster_path} size="large" />
