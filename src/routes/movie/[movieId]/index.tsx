@@ -1,6 +1,6 @@
 import { component$, useResource$ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { useLocation } from '@builder.io/qwik-city';
+import { useLocation, useDocumentHead } from '@builder.io/qwik-city';
 import { APIRequest } from '../../../api';
 import { MovieResponseType, MovieVideosResultsType } from '../../../api/types';
 import { getYear } from '../../../utils';
@@ -14,12 +14,23 @@ export const onGet = async ({ params }: { params: { movieId: string } }) => {
 
 export default component$(() => {
   const location = useLocation();
+  const documentHead = useDocumentHead();
 
   const movieDetailsResource = useResource$<MovieResponseType>(async ({ track, cleanup }) => {
     const id = track(() => location.params.movieId);
     const abortController = new AbortController();
     cleanup(() => abortController.abort('cleanup'));
-    return await APIRequest.getMovie(id);
+    const movieDetails = await APIRequest.getMovie(id);
+
+    documentHead.title = `${movieDetails?.title} (${getYear(movieDetails?.release_date)}) - ${movieDetails?.tagline}`;
+    documentHead.meta = [
+      {
+        name: 'description',
+        content: movieDetails?.overview,
+      },
+    ];
+
+    return movieDetails;
   });
 
   const MovieVideosResource = useResource$<MovieVideosResultsType[]>(async ({ track, cleanup }) => {
